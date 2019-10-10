@@ -22,6 +22,10 @@ def delete(s3, bucketName, key):
     print(resp)
     print('deleted {0}'.format(key))
 
+def put_acl(s3, bucketName, key, accessType):
+    s3.put_object_acl(Bucket = bucketName, Key = key, ACL = accessType)
+    print("successfully change access to {0} to {1}".format(key, accessType))
+
 if __name__ == "__main__":
     if len(sys.argv) > 2:
         operation = sys.argv[1]
@@ -30,6 +34,7 @@ if __name__ == "__main__":
         opMap['download'] = download
         opMap['upload'] = upload
         opMap['delete'] = delete
+        opMap['putacl'] = put_acl
         if operation in opMap:
             if len(sys.argv) == 4:
                 opMap[operation](s3, sys.argv[2], sys.argv[3])

@@ -26,6 +26,9 @@ def unsubscribe(sns, subscriptionArn):
     response = sns.unsubscribe(SubscriptionArn = subscriptionArn)
     return response
 
+def publishMessage(sns, topicArn, message, subject):
+    response = sns.publish(TopicArn = topicArn, Message = message, Subject = subject)
+    return response
 
 sns = clientCache.get('sns')
 arguments = sys.argv
@@ -41,7 +44,7 @@ oneArgMap['listTopic'] = listTopic
 fourArgsMap = {}
 fiveArgsMap = {}
 fiveArgsMap['subscribe'] = createSubscription
-
+fiveArgsMap['publish'] = publishMessage
 if len(arguments) == 2:
     print(oneArgMap[arguments[1]](sns))
 
